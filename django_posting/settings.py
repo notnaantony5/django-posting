@@ -5,7 +5,7 @@ from envparse import env
 BASE_DIR = Path(__file__).resolve().parent.parent
 ENV_PATH = BASE_DIR / '.env'
 if ENV_PATH.is_file():
-    env.read_env(ENV_PATH)
+    env.read_envfile(ENV_PATH)
 
 SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
