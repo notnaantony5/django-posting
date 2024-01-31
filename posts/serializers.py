@@ -9,10 +9,13 @@ class ListPostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'title')
 
+
 class PostSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.id')
     class Meta:
         model = Post
         fields = '__all__'
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,6 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'username',
                   'first_name',
                   'last_name')
+
 
 class RetrievePostSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True)

@@ -22,7 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',  # для jwt авторизации
-    'core'
+    'core',
+    'posts',
 ]
 
 AUTH_USER_MODEL = 'core.User'  # переопределяем модель на свою
