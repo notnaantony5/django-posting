@@ -23,11 +23,13 @@ class PostCreateView(CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
-        serializer.data['owner'] = request.user.id
+        serializer.is_valid()
+        serializer.validated_data['owner'] = request.user
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class PostDetailView(RetrieveAPIView):
+    queryset = Post.objects.all()
     serializer_class = RetrievePostSerializer
     permission_classes = [IsAuthenticated]
