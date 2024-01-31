@@ -6,7 +6,7 @@ from core.models import User
 
 class SignUpSerializer(serializers.ModelSerializer):
     password = serializers.CharField()
-    password_repeat = serializers.CharField()
+    password_repeat = serializers.CharField(write_only=True)
 
     def validate(self, attrs: dict) -> dict:
         if attrs.get('password') != attrs.get('password_repeat'):
