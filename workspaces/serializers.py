@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from workspaces.models import Workspace, User
 
@@ -17,6 +18,11 @@ class WorkspaceOwnerSerializer(
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        validated_data["password"] = make_password(
+            validated_data["password"]
+        )
+
     class Meta:
         model = User
         fields = '__all__'
