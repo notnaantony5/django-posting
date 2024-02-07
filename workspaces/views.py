@@ -17,7 +17,7 @@ class CreateWorkspaceView(CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        with transaction.atomic() as tr:
+        with transaction.atomic():
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             admin_ids = serializer.validated_data['admins']
@@ -32,7 +32,7 @@ class CreateWorkspaceView(CreateAPIView):
             ).save()
             for admin_id in admin_ids:
                 try:
-                    user = User.objects.get(admin_id)
+                    user = User.objects.get(id=admin_id)
                 except User.DoesNotExist:
                     return Response(data=
                                     {"error": f"user {admin_id} does not exist"},
@@ -41,10 +41,10 @@ class CreateWorkspaceView(CreateAPIView):
                     workspace=workspace,
                     user=user,
                     role=RoleChoice.ADMIN
-                )
+                ).save()
             for member_id in member_ids:
                 try:
-                    user = User.objects.get(admin_id)
+                    user = User.objects.get(id=member_id)
                 except User.DoesNotExist:
                     return Response(data=
                                     {"error": f"user {member_id} does not exist"},
@@ -53,8 +53,8 @@ class CreateWorkspaceView(CreateAPIView):
                     workspace=workspace,
                     user=user,
                     role=RoleChoice.MEMBER
-                )
-            tr.commit()
+                ).save()
+            return Response(status=status.HTTP_201_CREATED)
 
 
 class SignUpView(CreateAPIView):
