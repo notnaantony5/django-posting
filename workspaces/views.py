@@ -13,7 +13,7 @@ from django.db import transaction
 class CreateWorkspaceView(CreateAPIView):
     serializer_class = WorkspaceOwnerSerializer
     queryset = Workspace.objects.all()
-    authentication_classes = (TokenAuthentication,)
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
@@ -59,5 +59,4 @@ class CreateWorkspaceView(CreateAPIView):
 
 class SignUpView(CreateAPIView):
     serializer_class = CreateUserSerializer
-    authentication_classes = (TokenAuthentication,)
     permission_classes = []
