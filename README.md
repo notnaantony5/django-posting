@@ -3,6 +3,7 @@
    1. djangorestframework
    2. djangorestframework-simplejwt
    3. envparse
+   4. Создать requirements.txt
 3. Отредактировать настройки
    1. Создание пути к `.env`
    2. Вынести Debug и SECRET_KEY
